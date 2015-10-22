@@ -3,7 +3,7 @@ package ground;
 public class Life{
 	public static void main(String[] args) throws Exception{
 		String start= "_###_##_#_#_#_#__#__";
-		int numGens = 10;
+		int numGens = 100;
 		for(int i= 0; i < numGens; i++){
 			System.out.println("Generation " + i + ": " + start);
 			start= life(start);
@@ -14,7 +14,7 @@ public class Life{
 		String newGen= "";
 		for(int i= 0; i < lastGen.length(); i++){
 			int neighbors= 0;
-			if (i == 0){//left edge
+			if (i == 0){ //left edge
 				neighbors= lastGen.charAt(1) == '#' ? 1 : 0;
 			} else if (i == lastGen.length() - 1){//right edge
 				neighbors= lastGen.charAt(i - 1) == '#' ? 1 : 0;

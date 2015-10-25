@@ -1,9 +1,10 @@
 package basics;
 
-public class cell extends position{
+public class cell{
 	int direction;
 	int speed;
-	cell[] neighbor = new cell[9];	
+	int color;	
+	position poz = new position();
 	
 	public void move(){
 		
@@ -15,8 +16,5 @@ public class cell extends position{
 		} 
 	}
 	
-	public void setPosition(int xToSet, int yToSet){
-		x = xToSet;
-		y = yToSet;
-	}
+
 }

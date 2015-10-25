@@ -2,32 +2,41 @@ package gerstner;
 
 public class Point {
 
-	private int x = 0;
-	private int y = 0;
-	private int h = 0;
+	private double x = 0;
+	private double y = 0;
+	private double h = 0;
 
-	public Point(int x, int y, int h) {
+	public Point(double x, double y, double h) {
 		this.x = x;
 		this.y = y;
 		this.h = h;
 	}
 
-	public int getX() {
+	public void changeHeightOverTime(double amplitude, double[] wavevector, double omega, double time) {
+		double y = -666;
+		double vectorProduct = wavevector[0] * x + wavevector[0] * y
+				+ wavevector[1] * x + wavevector[1] * y;
+		y = amplitude * Math.cos(vectorProduct - (omega * time));
+
+		this.h = y;
+	}
+
+	public double getX() {
 		return x;
 	}
-	public void setX(int x) {
+	public void setX(double x) {
 		this.x = x;
 	}
-	public int getY() {
+	public double getY() {
 		return y;
 	}
-	public void setY(int y) {
+	public void setY(double y) {
 		this.y = y;
 	}
-	public int getH() {
+	public double getH() {
 		return h;
 	}
-	public void setH(int h) {
+	public void setH(double h) {
 		this.h = h;
 	}
 

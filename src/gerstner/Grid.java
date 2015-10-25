@@ -23,4 +23,12 @@ public class Grid {
 			System.out.println();
 		}
 	}
+
+	public Point[][] getGrid() {
+		return grid;
+	}
+
+	public void setGrid(Point[][] grid) {
+		this.grid = grid;
+	}
 }

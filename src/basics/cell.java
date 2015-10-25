@@ -1,6 +1,6 @@
 package basics;
 
-public class cell{
+public class cell extends position{
 	int direction;
 	int speed;
 	int color;	
@@ -11,10 +11,22 @@ public class cell{
 	}
 	
 	public void checkNeighborDistance(cell neighbor){
-		if (neighbor.x > x+1){
-			
-		} 
+		
 	}
 	
+	public int getColor(){
+		return color;
+	}
+	
+	public cell(){
+		this.color = 1;
+	}
+	
+	public void setColor(int i){
+		color = i;
+		direction = 0;
+		speed = 0;
+	}
+
 
 }

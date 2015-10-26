@@ -7,6 +7,10 @@ public class MainClass {
 		Gerstner gerstner = new Gerstner();
 		gerstner.init();
 		gerstner.simulate();
+
+		Grid grid = new Grid();
+		grid.init();
+		grid.printGridCoordinatesToConsole();
 	}
 
 }

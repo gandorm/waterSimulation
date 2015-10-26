@@ -6,8 +6,8 @@ public class Algorithms {
 		Cell[][] evolvedAutomaton = new Cell[Constants.X_DIMENSION][Constants.Y_DIMENSION];
 		
 		//zakres taki, zeby nie bylo skrajnych komorek
-		for (int x = 1; x < Constants.X_DIMENSION - 1; x++) {
-			for (int y = 1; y < Constants.Y_DIMENSION - 1; y++) {
+		for (int x = 0; x < Constants.X_DIMENSION ; x++) {
+			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
 				countState(setNeighbourhood(currentAutomaton, x, y));
 			}
 		}
@@ -29,6 +29,7 @@ public class Algorithms {
 	public Cell[] setNeighbourhood(Cell[][] currentAutomaton, int positionX, int positionY) {
 		Cell[] neighbourhood = new Cell[8];
 		neighbourhood[1] = currentAutomaton[positionX][positionY - 1];
+		neighbourhood[4] = currentAutomaton[positionX][positionY];
 		neighbourhood[3] = currentAutomaton[positionX - 1][positionY];
 		neighbourhood[5] = currentAutomaton[positionX + 1][positionY - 1];
 		neighbourhood[7] = currentAutomaton[positionX][positionY + 1];

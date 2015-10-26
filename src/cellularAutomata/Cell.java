@@ -1,4 +1,4 @@
-package CellularAutomata;
+package cellularAutomata;
 
 public class Cell {
 

@@ -57,7 +57,7 @@ public class Display2D {
 
 	private void simulate(Grid grid) {
 		double amplitude = 1.0;
-		double[] wavevector = {1,1};
+		double[] wavevector = {1, 5};
 		double omega = 2 / Math.PI;
 
 		// go through every grid point and apply height change
@@ -76,6 +76,7 @@ public class Display2D {
 		// color depends on its height field
 		// wow much formula very calculate
 		double blueIntensity = ((point.getH() + 1) * 0.5);
+		System.out.println(blueIntensity);
 		glColor3d(0.0, 0.0, blueIntensity);
 		glBegin(GL_QUADS);
 			glVertex2d(point.getX(), point.getY());																					// bottom left
@@ -114,7 +115,7 @@ public class Display2D {
 
 	private void update(int delta) {
 		// let the time pass
-		time += 0.15 * delta;
+		time += Parameters.TIME_PASS * delta;
 		updateFPS();
 	}
 

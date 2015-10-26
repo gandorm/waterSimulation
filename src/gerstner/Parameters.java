@@ -11,5 +11,6 @@ public abstract class Parameters {
 
 	// Display Params
 	public static final int GRID_DISPLAY_MULTIPLIER = 20;
+	public static final double TIME_PASS = 0.013;				// the smaller the slower
 
 }

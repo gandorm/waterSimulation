@@ -1,63 +1,69 @@
 package CellularAutomata;
 
-import static org.lwjgl.glfw.GLFW.*;
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.system.MemoryUtil.*;
+import java.util.Random;
 
-import java.nio.ByteBuffer;
-import static org.lwjgl.glfw.GLFWvidmode.*;
-
-
+import org.lwjgl.LWJGLException;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
+import org.lwjgl.opengl.GL11;
+ 
 public class Main {
-
-	public boolean running = false;
-	public long window;
-	public int width = 800, height = 600;
-
-	public void init() {
-		this.running = true;
-
-		if(glfwInit() != GL_TRUE) {
-			System.err.println("init fails");
-		}
-
-		glfwWindowHint(GLFW_RESIZABLE, GL_TRUE);
-
-		window = glfwCreateWindow(width,height,"Test",NULL, NULL);
-
-		if (window == NULL) {
-			System.err.println("window creation fails");
-		}
-
-		ByteBuffer vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-		glfwSetWindowPos(window,100,100);
-
-		glfwMakeContextCurrent(window);
-		glfwShowWindow(window);
+ 
+	int screenX = 600;
+	int screenY = 600;
+	int squareSize = 20;
+	
+	public float getRandomColor(){
+		Random rn = new Random();
+		return rn.nextFloat() + 0; // (max - min + 1)+ min
 	}
-
-	public void render() {
-		glfwSwapBuffers(window);
+    public void start() {
+        try {
+	    Display.setDisplayMode(new DisplayMode(screenX,screenY));
+	    Display.create();
+	} catch (LWJGLException e) {
+	    e.printStackTrace();
+	    System.exit(0);
 	}
-
-	public void update() {
-		glfwPollEvents();
+ 
+	// init OpenGL
+	GL11.glMatrixMode(GL11.GL_PROJECTION);
+	GL11.glLoadIdentity();
+	GL11.glOrtho(0, screenX, 0, screenY, 1, -1);
+	GL11.glMatrixMode(GL11.GL_MODELVIEW);
+ 
+	while (!Display.isCloseRequested()) {
+	    // Clear the screen and depth buffer
+	    GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);	
+ 
+	    // set the color of the quad (R,G,B,A)
+	    //GL11.glColor3f(0.5f,0.5f,1.0f);
+ 
+	    // draw quad
+	    GL11.glBegin(GL11.GL_QUADS);
+	    
+	    for(int i=0; i<(screenX/squareSize); i++){
+	    	if (i%2 == 0)
+	    		GL11.glColor3f(getRandomColor(),getRandomColor(),getRandomColor());
+	    	else
+	    		GL11.glColor3f(getRandomColor(),getRandomColor(),getRandomColor());
+	    	for(int j=0; j<(screenY/squareSize); j++){	    		
+			    GL11.glVertex2f(squareSize*i,squareSize*j);
+				GL11.glVertex2f(i*squareSize+squareSize,squareSize*j);
+				GL11.glVertex2f(i*squareSize+squareSize,squareSize*j+squareSize);
+				GL11.glVertex2f(i*squareSize,squareSize*j+squareSize);
+	    	}
+	    }
+	    
+	    GL11.glEnd();
+	    Display.update();
 	}
-
-	public void run() {
-		init();
-		while(running) {
-			update();
-			render();
-
-			if(glfwWindowShouldClose(window) == GL_TRUE) {
-				running = false;
-			}
-		}
-	}
-
-	public static void main(String args[]){
-		Main main = new Main();
-		main.run();
-	}
+ 
+	Display.destroy();
+    }
+ 
+    public static void main(String[] argv) {
+        Main quadExample = new Main();
+        quadExample.start();
+    }
 }

@@ -27,3 +27,14 @@ tak powinien wyglądać wasz .classpath:
 	<classpathentry kind="lib" path="lib/jars/trident-7.2.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
+
+
+tak srednio sie zaciagaja te natives wiec tak:
+http://sourceforge.net/projects/java-game-lib/?source=typ_redirect
+
+sciagacie to
+potem w folderze lib w projekcie tworzycie sobie podfolder natives
+wrzucacie tam natives z tego sciagnietego rara
+Configure Build Path -> Libraries -> Dwuklik na lwjgl.jar -> i tam jest opcja natives gdzie wybieracie ten folder z przekopiowanymi .dllami
+
+Potem refresh na caym projekcie i powinno dzialac w pytke ;)

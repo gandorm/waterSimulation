@@ -1,12 +1,9 @@
 package gerstner;
 
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.GL_DEPTH_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.GL_MODELVIEW;
 import static org.lwjgl.opengl.GL11.GL_PROJECTION;
 import static org.lwjgl.opengl.GL11.GL_QUADS;
 import static org.lwjgl.opengl.GL11.glBegin;
-import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL11.glColor3d;
 import static org.lwjgl.opengl.GL11.glLoadIdentity;
 import static org.lwjgl.opengl.GL11.glMatrixMode;
@@ -78,7 +75,7 @@ public class Display2D {
 			glVertex2d(point.getX(), point.getY());																					// bottom left
 			glVertex2d(point.getX(), point.getY() + Parameters.GRID_DISPLAY_MULTIPLIER);											// top left
 			glVertex2d(point.getX() + Parameters.GRID_DISPLAY_MULTIPLIER, point.getY() + Parameters.GRID_DISPLAY_MULTIPLIER);		// top right
-			glVertex2d(point.getX() + Parameters.GRID_DISPLAY_MULTIPLIER, point.getY() * Parameters.GRID_DISPLAY_MULTIPLIER);		// bottom right
+			glVertex2d(point.getX() + Parameters.GRID_DISPLAY_MULTIPLIER, point.getY());											// bottom right
 		}
 
 

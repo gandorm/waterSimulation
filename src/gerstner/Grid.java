@@ -10,7 +10,7 @@ public class Grid {
 		// Populating grid with points, default height = 0
 		for(int i = 0; i < Parameters.GRID_SIZE_X; i++) {
 			for(int k = 0; k < Parameters.GRID_SIZE_Y; k++) {
-				grid[i][k] = new Point(i, k, 0);
+				grid[i][k] = new Point(i * Parameters.GRID_DISPLAY_MULTIPLIER, k * Parameters.GRID_DISPLAY_MULTIPLIER, 0);
 			}
 		}
 	}

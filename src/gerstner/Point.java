@@ -14,7 +14,7 @@ public class Point {
 		this.h = h;
 	}
 
-	public void changeHeightOverTime(double amplitude, double[] wavevector, double time) {
+	/*public void changeHeightOverTime(double amplitude, double[] wavevector, double time) {
 		double y = -666;
 		double omega = (2 / Math.PI);
 		
@@ -22,7 +22,7 @@ public class Point {
 		y = amplitude * Math.cos(vectorProduct - (omega * time));
 
 		this.h = y;
-	}
+	}*/
 	
 	public void changeHeightOverTime(List<Wave> waves, double time) {
 		double sum = 0.0;

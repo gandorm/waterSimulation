@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -50,6 +51,7 @@ public class Display2D {
 		grid.init();
 		
 		waves = new ArrayList<Wave>();
+		generateRandomWaves();
 
 
 		while(!Display.isCloseRequested()) {
@@ -89,7 +91,7 @@ public class Display2D {
 	}*/
 	
 	private void simulate(Grid grid) {
-		generateWaves();
+		//generateRandomWaves();
 		
 		// go through every grid point and apply height change
 		for(int i = 0; i < Parameters.GRID_SIZE_X; i++) {
@@ -99,7 +101,20 @@ public class Display2D {
 			}
 		}
 		
-		waves.clear();
+		//waves.clear();
+	}
+	
+	private void generateRandomWaves() {
+		double amplitude, x, y;
+		Random random;
+		
+		for(int i = 0; i < Parameters.WAVE_COUNT; i++) {
+			random = new Random();
+			amplitude = (0.1 + (random.nextDouble() * 0.8));
+			x = (1.0 + (random.nextDouble() * 2.0));
+			y = (1.0 + (random.nextDouble() * 2.0));
+			waves.add(new Wave(amplitude, x, y));
+		}
 	}
 	
 	private void generateWaves() {

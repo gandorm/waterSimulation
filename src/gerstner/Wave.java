@@ -10,6 +10,13 @@ public class Wave {
 		this.wavevector = new double[2];
 	}
 	
+	public Wave(double amplitude, double x, double y) {
+		this.amplitude = amplitude;
+		this.wavevector = new double[2];
+		this.wavevector[0] = x;
+		this.wavevector[1] = y;
+	}
+	
 	public double getAmplitude() {
 		return amplitude;
 	}

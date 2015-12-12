@@ -1,5 +1,7 @@
 package gerstner;
 
+import java.util.List;
+
 public class Point {
 
 	private double x = 0;
@@ -12,12 +14,27 @@ public class Point {
 		this.h = h;
 	}
 
-	public void changeHeightOverTime(double amplitude, double[] wavevector, double omega, double time) {
+	public void changeHeightOverTime(double amplitude, double[] wavevector, double time) {
 		double y = -666;
+		double omega = (2 / Math.PI);
+		
 		double vectorProduct = (wavevector[0] * this.x) + (wavevector[1] * this.y);
 		y = amplitude * Math.cos(vectorProduct - (omega * time));
 
 		this.h = y;
+	}
+	
+	public void changeHeightOverTime(List<Wave> waves, double time) {
+		double sum = 0.0;
+		double vectorProduct = -7.7;
+		double omega = (2 / Math.PI);
+		
+		for(Wave wave : waves) {
+			vectorProduct = (wave.getWavevector()[0] * this.x) + (wave.getWavevector()[1] * this.y);
+			sum += (wave.getAmplitude() * Math.cos(vectorProduct - (omega * time)));
+		}
+		
+		this.h = sum;
 	}
 
 	public double getX() {

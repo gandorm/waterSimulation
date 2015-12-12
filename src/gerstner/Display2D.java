@@ -106,18 +106,22 @@ public class Display2D {
 		Wave w1 = new Wave();
 		Wave w2 = new Wave();
 		Wave w3 = new Wave();
+		Wave w4 = new Wave();
 		
 		w1.setAmplitude(0.8);
 		w2.setAmplitude(0.6);
 		w3.setAmplitude(0.4);
+		w4.setAmplitude(0.3);
 		
 		w1.setWavevector(1.0, 2.0);
 		w2.setWavevector(1, 0);
 		w3.setWavevector(1.7, 3.3);
+		w4.setWavevector(0.7, 1.2);
 		
 		waves.add(w1);
 		waves.add(w2);
 		waves.add(w3);
+		waves.add(w4);
 	}
 
 	private void drawCell(Point point) {
@@ -125,8 +129,8 @@ public class Display2D {
 		// display particular cell of a wave
 		// color depends on its height field
 		// wow much formula very calculate
-		double blueIntensity = ((point.getH() + 1) * 0.5);
-		System.out.println(blueIntensity);
+		double blueIntensity = ((Math.abs(point.getH())));
+		System.out.println(point.getH());
 		glColor3d(0.0, 0.0, blueIntensity);
 		glBegin(GL_QUADS);
 			glVertex2d(point.getX(), point.getY());																					// bottom left

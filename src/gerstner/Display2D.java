@@ -130,7 +130,7 @@ public class Display2D {
 		// color depends on its height field
 		// wow much formula very calculate
 		double blueIntensity = ((Math.abs(point.getH())));
-		System.out.println(point.getH());
+		//System.out.println(point.getH());
 		glColor3d(0.0, 0.0, blueIntensity);
 		glBegin(GL_QUADS);
 			glVertex2d(point.getX(), point.getY());																					// bottom left

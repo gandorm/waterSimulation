@@ -35,7 +35,7 @@ public class Display2D {
 
 	public void start() {
 		try {
-			Display.setDisplayMode(new DisplayMode(Parameters.GRID_SIZE_X * Parameters.GRID_DISPLAY_MULTIPLIER, Parameters.GRID_SIZE_Y * Parameters.GRID_DISPLAY_MULTIPLIER));
+			Display.setDisplayMode(new DisplayMode(800, 600));
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -138,14 +138,23 @@ public class Display2D {
 		waves.add(w3);
 		waves.add(w4);
 	}
+	
+	private double calculateBlueIntensity(double value){
+		double blueIntensity = 0;
+		if (value < 0)
+			return blueIntensity = 0;
+		if (value > 1.7)
+			return blueIntensity = 1;
+		else
+			return blueIntensity = (value*100)/255;	
+	}
 
 	private void drawCell(Point point) {
 
 		// display particular cell of a wave
 		// color depends on its height field
 		// wow much formula very calculate
-		double blueIntensity = ((Math.abs(point.getH())));
-		//System.out.println(point.getH());
+		double blueIntensity = calculateBlueIntensity(point.getH());					
 		glColor3d(0.0, 0.0, blueIntensity);
 		glBegin(GL_QUADS);
 			glVertex2d(point.getX(), point.getY());																					// bottom left

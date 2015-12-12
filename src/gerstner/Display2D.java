@@ -56,8 +56,8 @@ public class Display2D {
 	}
 
 	private void simulate(Grid grid) {
-		double amplitude = 1.0;
-		double[] wavevector = {1, 5};
+		double amplitude = 0.7;
+		double[] wavevector = {2, 3};
 		double omega = 2 / Math.PI;
 
 		// go through every grid point and apply height change
@@ -66,8 +66,8 @@ public class Display2D {
 				grid.getGrid()[i][k].changeHeightOverTime(amplitude, wavevector, omega, time);
 				drawCell(grid.getGrid()[i][k]);
 			}
-
 		}
+
 	}
 
 	private void drawCell(Point point) {

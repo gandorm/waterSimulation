@@ -9,12 +9,12 @@ public class Automaton {
 		for (int x = 0; x < Constants.X_DIMENSION; x++) {
 			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
 				automaton[x][y] = new Cell();
-				automaton[x][y].setState(1.0f);
+				automaton[x][y].setState(-1.0f);
 			}
 		}
 		
 		for (int i = 1;i<99;i++) {
-			automaton[1][i].setState(1.0f);
+			automaton[1][i].setState(0.6f);
 		}
 			
 		for (int i = 0; i<100; i++) {

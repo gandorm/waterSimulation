@@ -39,7 +39,7 @@ public class DisplayCA {
         
         
         drawAutomaton();
-       // cellUpdate();
+        cellUpdate();
         
         Display.update();
         try{
@@ -76,25 +76,13 @@ public class DisplayCA {
 	    GL11.glBegin(GL11.GL_QUADS);
 	    for(int x = 0; x < 100; x ++)
 		{
-	    	for(int y=0;y<100;y++){
-	    	GL11.glColor3f(1, 1, 1);
-	    	if (automaton.getAutomaton()[x][y].getState() < 0.00000000000001f && automaton.getAutomaton()[x][y].getState() > 0.00000000000000001f) {
-	    		GL11.glColor3f(0.9f,0.443f,0.232f);																			
-	    	}
-	    	if (automaton.getAutomaton()[x][y].getState() < 0.00000000000000001f && automaton.getAutomaton()[x][y].getState() > 0.00000000000000000001f) {
-	    		GL11.glColor3f(0.4f,0.443f,0.232f);
-	    	}
-	    	if (automaton.getAutomaton()[x][y].getState() < 0.0000000001f && automaton.getAutomaton()[x][y].getState() > 0.00000000000001f) {
-	    		GL11.glColor3f(0.1f,0.443f,0.232f);
-	    	}
-	    	
-	    	if (automaton.getAutomaton()[x][y].getState() == 0.0f) {
-	    		GL11.glColor3f(0.8f,0.8f,0.0f);
-	    	}
-	    	/*
-	    	if (automaton.getAutomaton()[x][y].getState() > 0.00000000000001f && automaton.getAutomaton()[x][y].getState() > 0.00000000000000001f) {
-	    		GL11.glColor3f(0.9f,0.443f,0.232f);
-	    	}*/
+	    	for(int y=0;y<100;y++){	 	    	
+	    	//Normalizacja
+	    	if(automaton.getAutomaton()[x][y].getState() != 0.0f)
+	    	GL11.glColor3f(0,0,(automaton.getAutomaton()[x][y].getState() + 1)/2);
+	    	else
+		    GL11.glColor3f(0.8f,0.8f,0);
+  	
 	    	
 	    	GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY - 1) + padding_half ); //bottom-left vertex	    	
 	        GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY)     - padding_half ); //top-left vertex
@@ -109,9 +97,9 @@ public class DisplayCA {
     }
     
     public void cellUpdate(){
-	    for(int x = 1; x < 99; x ++)
+	    for(int x = 2; x < 98; x ++)
 		{
-	    	for(int y=1;y<99;y++){
+	    	for(int y=2;y<98;y++){
 	    		float state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}

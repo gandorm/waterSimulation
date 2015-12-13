@@ -19,20 +19,24 @@ public class Algorithms {
 		
 		if (currentState != 0.0f){
 
-		for(int i = 1; i<13;i++){
+		for(int i = 0; i<13;i++){
 			state += neighbourhood[i].getState();
 		}
 		
 		state /= Constants.DAMPING;
 		state -= currentState;
-		
 		// TODO do contatnts
 		state /= 1.05;
 		
 		//TODO tu powinien byc minimax -1,state,1?
-		state = minmax(-1.0f,state,1.0f);
-		if (state<-1 || state>1) System.out.println("Witaj w dupie: " + state);
-		} else state = currentState;
+		state = minmax(-0.99999f,state,0.99999f);
+		} 
+		else
+			state =  minmax(-0.99999f,currentState,0.99999f);
+		
+		if(state==1.0f) {
+			System.out.println(":(");
+		}
 		
 		return state;
 	}
@@ -65,5 +69,21 @@ public class Algorithms {
 		}
 		else return value;
 		
+	}
+	
+	public static Cell[][] deepAutomatonClone(Cell[][]input) {
+		if (input==null) {
+			return null;
+		}
+		
+		Cell[][] result = new Cell[Constants.X_DIMENSION][];
+		for(int i=0;i<input.length;i++){
+			result[i]=input[i].clone();
+			for(int b=0;b<input[i].length;b++) {
+				result[i][b] = new Cell(input[i][b]); 
+			}
+		}
+
+		return result;
 	}
 }

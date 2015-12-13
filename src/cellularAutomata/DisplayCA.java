@@ -11,6 +11,8 @@ public class DisplayCA {
 	  
 	Automaton automaton;
 	Algorithms algorithms;
+	int checker = 0;
+	
 	
     public void start() {
         try {
@@ -23,7 +25,6 @@ public class DisplayCA {
   
     // init OpenGL
     automaton = new Automaton();
-    automaton.init();
     algorithms = new Algorithms();
     GL11.glMatrixMode(GL11.GL_PROJECTION);
     GL11.glLoadIdentity();
@@ -41,6 +42,12 @@ public class DisplayCA {
         drawAutomaton();
         cellUpdate();
         
+        if(checker==3) {
+        //generateTides();
+        checker=0;
+        }
+        checker++;        
+        
         Display.update();
         try{
         TimeUnit.MILLISECONDS.sleep(100);
@@ -49,7 +56,13 @@ public class DisplayCA {
   
     Display.destroy();
     }
-    
+  
+    public void generateTides() {
+		for (int i = 20;i<40;i++) {
+			automaton.getAutomaton()[18][i].setState(-.8f);
+			//automaton.getAutomaton()[17][i].setState(.02f);
+		}
+    }
   
     public void draw() {
     	int gridSize = 6;
@@ -73,13 +86,17 @@ public class DisplayCA {
     	int padding_half = 1;
     	int startX = 20;
     	int startY = 10;
+    	
 	    GL11.glBegin(GL11.GL_QUADS);
 	    for(int x = 0; x < 100; x ++)
 		{
 	    	for(int y=0;y<100;y++){	 	    	
 	    	//Normalizacja
-	    	if(automaton.getAutomaton()[x][y].getState() != 0.0f)
-	    	GL11.glColor3f(0,0,(automaton.getAutomaton()[x][y].getState() + 1)/2);
+	    	if(automaton.getAutomaton()[x][y].getState() != 0.0f){
+	    		float stan = automaton.getAutomaton()[x][y].getState();
+	    		float state = (float) Math.sqrt(Math.abs(stan)) * (stan>0 ? +1 : -1);
+	    		GL11.glColor3f(0,0,(state + 1)/2);
+	    	}
 	    	else
 		    GL11.glColor3f(0.8f,0.8f,0);
   	
@@ -97,23 +114,22 @@ public class DisplayCA {
     }
     
     public void cellUpdate(){
-	    for(int x = 2; x < 98; x ++)
+
+    	Cell[][] b = algorithms.deepAutomatonClone(automaton.getAutomaton());
+
+    	@SuppressWarnings("unused")
+		int a=1;
+    	a+=1;
+    		
+	    for(int x = 97; x >2; x--)
 		{
-	    	for(int y=2;y<98;y++){
+	    	for(int y=97;y>2;y--){
 	    		float state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}
 		}
 	    
-	    /*
-	    for(int x = 1; x < 99; x ++)
-		{
-	    	for(int y=1;y<99;y++){
-	    		//float state = algorithms.smooth(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
-	    		automaton.getAutomaton()[x][y].setState(state);
-			}
-		}
-		*/
+	    
     }
     
     public static void main(String[] argv) {

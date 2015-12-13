@@ -1,21 +1,61 @@
 package cellularAutomata;
 
-public class Automaton {
+public class Automaton{
 
 	private Cell[][] automaton;
 	
+	public Automaton() {
+		init();
+	}
+	
+	public Automaton(Automaton a) {
+	//	Cell[][] b = a.getAutomaton();
+		//for (int i=0;i<Constants.X_DIMENSION;i++) {
+			//for(int j=0;j<Constants.Y_DIMENSION;j++) {
+				//b[i][j]=a.getAutomaton()[i][j];
+			//}
+		//}
+		this.automaton=a.getAutomaton();
+		
+	}
+		
 	public void init() {
 		automaton = new Cell[Constants.X_DIMENSION][Constants.Y_DIMENSION];
-		for (int x = 0; x < Constants.X_DIMENSION; x++) {
+	/*	for (int x = 0; x < 2; x++) {
 			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
 				automaton[x][y] = new Cell();
-				automaton[x][y].setState(-1.0f);
+				automaton[x][y].setState(0.0f);
 			}
 		}
 		
-		for (int i = 1;i<99;i++) {
-			automaton[1][i].setState(0.6f);
+		for (int x = 0; x < Constants.X_DIMENSION; x++) {
+			for (int y = 0; y < 2; y++) {
+				automaton[x][y] = new Cell();
+				automaton[x][y].setState(0.0f);
+			}
 		}
+		
+		for (int x = Constants.X_DIMENSION - 2; x < Constants.X_DIMENSION; x++) {
+			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
+				automaton[x][y] = new Cell();
+				automaton[x][y].setState(0.0f);
+			}
+		}
+		
+		for (int x = 0; x < Constants.X_DIMENSION; x++) {
+			for (int y = Constants.Y_DIMENSION - 2; y <Constants.Y_DIMENSION; y++) {
+				automaton[x][y] = new Cell();
+				automaton[x][y].setState(0.0f);
+			}
+		}*/
+		
+		for (int x = 0; x < Constants.X_DIMENSION; x++) {
+			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
+				automaton[x][y] = new Cell();
+				automaton[x][y].setState(.004f);
+			}
+		}
+		
 			
 		for (int i = 0; i<100; i++) {
 			int border=1;
@@ -59,9 +99,7 @@ public class Automaton {
 			for(int j=border;j<100;j++) {
 				automaton[j][i].setState(0.0f);
 			}
-			
-		}
-		
+		}	
 	}
 
 	public Cell[][] getAutomaton() {
@@ -71,7 +109,5 @@ public class Automaton {
 	public void setAutomaton(Cell[][] automaton) {
 		this.automaton = automaton;
 	}
-	
-	
-	
+		
 }

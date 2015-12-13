@@ -36,7 +36,7 @@ public class Display2D {
 	public void start() {
 		try {
 			Display.setDisplayMode(new DisplayMode(Parameters.GRID_SIZE_X * Parameters.GRID_DISPLAY_MULTIPLIER, Parameters.GRID_SIZE_Y * Parameters.GRID_DISPLAY_MULTIPLIER));
-			Display.setDisplayMode(new DisplayMode(800, 600));
+			//Display.setDisplayMode(new DisplayMode(800, 600));
 			Display.create();
 		} catch (LWJGLException e) {
 			e.printStackTrace();
@@ -51,8 +51,8 @@ public class Display2D {
 		grid = new Grid();				// initialize grid
 		grid.init();
 		
-		waves = new ArrayList<Wave>();
-		generateRandomWaves();
+		waves = new ArrayList<Wave>();	// initialize waves
+		generateWaves();
 
 
 		while(!Display.isCloseRequested()) {
@@ -75,45 +75,37 @@ public class Display2D {
 		simulate(grid);
 
 	}
-
-	/*private void simulate(Grid grid) {
-		double amplitude = 0.7;
-		double[] wavevector = {2, 3};
-		double omega = 2 / Math.PI;
-
-		// go through every grid point and apply height change
-		for(int i = 0; i < Parameters.GRID_SIZE_X; i++) {
-			for(int k = 0; k < Parameters.GRID_SIZE_Y; k++) {
-				grid.getGrid()[i][k].changeHeightOverTime(amplitude, wavevector, omega, time);
-				drawCell(grid.getGrid()[i][k]);
-			}
-		}
-
-	}*/
 	
 	private void simulate(Grid grid) {
-		//generateRandomWaves();
 		
 		// go through every grid point and apply height change
 		for(int i = 0; i < Parameters.GRID_SIZE_X; i++) {
 			for(int k = 0; k < Parameters.GRID_SIZE_Y; k++) {
-				grid.getGrid()[i][k].changeHeightOverTime(waves, time);
+				grid.getGrid()[i][k].evaluateGerstnerWaveMovement(waves, time);
 				drawCell(grid.getGrid()[i][k]);
 			}
 		}
-		
-		//waves.clear();
 	}
 	
 	private void generateRandomWaves() {
 		double amplitude, x, y;
-		Random random;
+		boolean isFirstCalculated = true;
+		double xOffset = 0.0;
+		double yOffset = 0.0;
+		Random random = new Random();
 		
 		for(int i = 0; i < Parameters.WAVE_COUNT; i++) {
-			random = new Random();
-			amplitude = (0.1 + (random.nextDouble() * 0.8));
-			x = (1.0 + (random.nextDouble() * 2.0));
-			y = (1.0 + (random.nextDouble() * 2.0));
+			amplitude = (0.1 + (random.nextDouble() * 0.7));
+			if(isFirstCalculated) {
+				x = (1.0 + (random.nextDouble() * 2.0));
+				xOffset = x;
+				y = (1.0 + (random.nextDouble() * 2.0));
+				yOffset = y;
+			} else {
+				x = xOffset + (random.nextDouble() * 2.0);
+				y = yOffset + (random.nextDouble() * 2.0);
+			}
+			isFirstCalculated = false;
 			waves.add(new Wave(amplitude, x, y));
 		}
 	}
@@ -130,9 +122,9 @@ public class Display2D {
 		w4.setAmplitude(0.3);
 		
 		w1.setWavevector(1.0, 2.0);
-		w2.setWavevector(1, 0);
-		w3.setWavevector(1.7, 3.3);
-		w4.setWavevector(0.7, 1.2);
+		w2.setWavevector(1, 3);
+		w3.setWavevector(2, 2);
+		w4.setWavevector(1, 0);
 		
 		waves.add(w1);
 		waves.add(w2);
@@ -156,7 +148,7 @@ public class Display2D {
 		// color depends on its height field
 		// wow much formula very calculate
 		double blueIntensity = ((Math.abs(point.getH())));
-		double blueIntensity = calculateBlueIntensity(point.getH());					
+		//double blueIntensity = calculateBlueIntensity(Math.abs(point.getH()));					
 		glColor3d(0.0, 0.0, blueIntensity);
 		glBegin(GL_QUADS);
 			glVertex2d(point.getX(), point.getY());																					// bottom left

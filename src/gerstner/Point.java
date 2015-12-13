@@ -36,6 +36,39 @@ public class Point {
 		
 		this.h = sum;
 	}
+	
+	public void evaluateGerstnerWaveMovement(List<Wave> waves, double time) {
+		double sum = 0.0;
+		double vectorProduct;
+		double wavenumber;
+		double angularFrequency;
+		double basicFrequency;
+		double quantizedFrequency;
+		
+		for(Wave wave : waves) {
+			
+			// calculating wavenumber based on wavevector
+			wavenumber = Math.sqrt((Math.pow(wave.getWavevector()[0], 2) + Math.pow(wave.getWavevector()[1], 2)));
+			
+			// calculating angular frequency considering the dispersion relation
+			// assuming that it's a deep sea, so h -> infinity
+			// then tanh(kh) -> 1
+			angularFrequency = Math.sqrt(Parameters.GRAVITY * wavenumber);
+			
+			// calculating basic frequency based on particular moment in time
+			basicFrequency = ((2 * Math.PI) / time);
+			
+			// quantizing the angular frequency to allow repeating sequences to occur
+			quantizedFrequency = ((int) angularFrequency / basicFrequency) * basicFrequency;
+			
+			// calculating vector product and summing the waves
+			vectorProduct = (wave.getWavevector()[0] * this.x) + (wave.getWavevector()[1] * this.y);
+			sum += (wave.getAmplitude() * Math.cos(vectorProduct - (quantizedFrequency * time)));
+		}
+		
+		// updating the height of current point
+		this.h = sum;
+	}
 
 	public double getX() {
 		return x;

@@ -18,12 +18,12 @@ public class Arrow_Test extends JPanel implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         int value = ((JSlider) e.getSource()).getValue();
         theta = Math.toRadians(value);
+        System.out.print((int)value);
         repaint();
     }
 
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        JPanel gr = new JPanel();
         Graphics2D g2d = (Graphics2D) g;
 
         g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
@@ -44,7 +44,6 @@ public class Arrow_Test extends JPanel implements ChangeListener {
         at.translate(x, y);
         at.rotate(theta, arrow.getBounds().getWidth() / 2d, arrow.getBounds().getHeight() / 2d);
         g2d.setTransform(at);
-
         g2d.draw(arrow);
         g2d.dispose();
         

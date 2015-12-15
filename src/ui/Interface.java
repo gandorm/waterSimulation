@@ -61,8 +61,8 @@ public class Interface extends Frame implements ActionListener{
 		     windSpeed.setMinorTickSpacing(1);
 		     windSpeed.setPaintTicks(true);
 		     windSpeed.setPaintLabels(true);		     
-		     windSpeed.addChangeListener(new stateChanged());
-	     
+		     windSpeed.addChangeListener(new stateChanged());		     
+		  	     
 		     wind.add(lblInput);
 		     wind.add(windSpeed);
 		 
@@ -73,8 +73,10 @@ public class Interface extends Frame implements ActionListener{
 		 JPanel arrow = new JPanel();
 			arrow.setLayout(new BoxLayout(arrow, BoxLayout.PAGE_AXIS));	
 			
-	     Arrow_Test test = new Arrow_Test();     
+	     Arrow_Test test = new Arrow_Test();
 	     
+	     arrow.setPreferredSize(new Dimension(200, 200));
+	     arrow.setMinimumSize(arrow.getPreferredSize());
 	     arrow.add(test);
 	     arrow.add(test.getSlider(), "Last");
      

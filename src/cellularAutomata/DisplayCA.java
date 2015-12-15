@@ -42,8 +42,15 @@ public class DisplayCA {
         drawAutomaton();
         cellUpdate();
         
-        if(checker==3) {
-        generateTides();
+        if(checker==5) {
+        //generateTides();
+        
+    		automaton.getAutomaton()[25][27].setState(0.7f);
+    		automaton.getAutomaton()[26][26].setState(0.7f);
+    		automaton.getAutomaton()[27][25].setState(0.7f);
+    		automaton.getAutomaton()[28][24].setState(0.7f);
+    		automaton.getAutomaton()[29][23].setState(0.7f);
+        		
         checker=0;
         }
         checker++;        
@@ -57,16 +64,11 @@ public class DisplayCA {
     Display.destroy();
     }
   
-    public void generateTides() {
-		for (int i = 20;i<42;i++) {
-			automaton.getAutomaton()[18][i].setState(-1.0f);
-			automaton.getAutomaton()[17][i].setState(.02f);
-		}
-    	
-    //	automaton.getAutomaton()[12][13].setState(0.2f);
-    //	automaton.getAutomaton()[13][12].setState(0.2f);
-    //	automaton.getAutomaton()[14][13].setState(0.2f);
-    //	automaton.getAutomaton()[13][14].setState(0.2f);
+    public void generateTides() {    	
+    	automaton.getAutomaton()[12][13].setState(0.2f);
+    	automaton.getAutomaton()[13][12].setState(0.2f);
+    	automaton.getAutomaton()[14][13].setState(0.2f);
+    	automaton.getAutomaton()[13][14].setState(0.2f);
     }
   
     public void draw() {
@@ -122,16 +124,9 @@ public class DisplayCA {
 
     	Cell[][] b = Algorithms.deepAutomatonClone(automaton.getAutomaton());
 
-    	@SuppressWarnings("unused")
-		int a=1;
-    	int c = a;
-    	a+=1;
-    	
-    		
-    	
-	    for(int x = 0; x <Constants.X_DIMENSION; x++)
+	    for(int x = Constants.X_DIMENSION -1; x >= 0; x--)
 		{
-	    	for(int y=0;y<Constants.Y_DIMENSION;y++){
+	    	for(int y=Constants.Y_DIMENSION-1;y>=0;y--){
 	    		float state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}

@@ -52,7 +52,7 @@ public class Automaton{
 		for (int x = 0; x < Constants.X_DIMENSION; x++) {
 			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
 				automaton[x][y] = new Cell();
-				automaton[x][y].setState(.0000004f);
+				automaton[x][y].setState(-0.0000004f);
 			}
 		}
 		

@@ -3,18 +3,7 @@ package cellularAutomata;
 import com.sun.corba.se.impl.orbutil.closure.Constant;
 
 public class Algorithms {
-	
-	/*
-	public float smooth(Cell neighbourhood[]) {
-		float currentState = neighbourhood[4].getState();
 		
-		currentState = (neighbourhood[1].getState() + neighbourhood[3].getState() +
-				 		neighbourhood[5].getState() + neighbourhood[7].getState())/4;
-		
-		return currentState;
-	}
-	*/
-	
 	public float countState(Cell neighbourhood[]) {
 		float state=0.0f;	
 		float currentState = neighbourhood[0].getState();
@@ -27,10 +16,8 @@ public class Algorithms {
 		
 		state /= Constants.DAMPING;
 		state -= currentState;
-		// TODO do contatnts
-	 	state *= .95;
-		
-		//TODO tu powinien byc minimax -1,state,1?
+		//TODO dodac do constants
+	 	state /= 1.00000000001;
 		state = minmax(-0.99999f,state,0.99999f);
 		} 
 		else

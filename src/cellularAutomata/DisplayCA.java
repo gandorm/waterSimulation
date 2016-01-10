@@ -1,6 +1,21 @@
 package cellularAutomata;
 
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
 import java.util.concurrent.TimeUnit;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
@@ -13,10 +28,89 @@ public class DisplayCA {
 	Algorithms algorithms;
 	int checker = 0;
 	
+   private JLabel lblInput;     // Declare input Label
+   private JTextField tfInput;  // Declare input TextField
+   private JTextField tfOutput; // Declare output TextField
+   private int numberIn;       // Input number
+   private int sum = 0;  
+   static final int WIND_MIN = 0;
+   static final int WIND_MAX = 50;
+   static final int WIND_INIT = 25;// Accumulated sum, init to 0
 	
-    public void start() {
+	
+    public void start() throws LWJGLException {
+    	
+    	class stateChanged implements ChangeListener{
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider)e.getSource();
+				System.out.print((int)source.getValue());
+			} 
+		}
+    	
+    	 Canvas openglSurface = new Canvas();
+         JFrame frame = new JFrame();
+         frame.setLayout(new BorderLayout());
+         
+         frame.setVisible(true);
+         frame.add(new JTextField("Hello World!"));
+         openglSurface.setSize(800, 800);
+         
+         JPanel panel = new JPanel();
+         panel.setSize(200,200);
+         JButton b1 = new JButton("one");
+         
+         b1.setPreferredSize(new Dimension(100, 100));
+         b1.setVisible(true);
+         panel.add(b1);
+         
+         //Sila wiatru
+         JPanel main = new JPanel();
+         
+	        JPanel wind = new JPanel();
+	        
+	 		lblInput = new JLabel("Wybierz sile wiatru: ");
+	 		wind.setLayout(new BoxLayout(wind, BoxLayout.PAGE_AXIS));		
+      
+ 		    JSlider windSpeed = new JSlider(JSlider.HORIZONTAL,
+ 		             WIND_MIN, WIND_MAX, WIND_INIT);
+ 		    
+ 			 windSpeed.setMajorTickSpacing(10);
+ 		     windSpeed.setMinorTickSpacing(1);
+ 		     windSpeed.setPaintTicks(true);
+ 		     windSpeed.setPaintLabels(true);		     
+ 		     windSpeed.addChangeListener(new stateChanged());		     
+ 		  	     
+ 		     wind.add(lblInput);
+ 		     wind.add(windSpeed);
+	 		 wind.setPreferredSize(new Dimension(400, 200));
+		     wind.setVisible(true);
+		     
+		   //Strzalka
+			 
+			 JPanel arrow = new JPanel();
+			 arrow.setLayout(new BoxLayout(arrow, BoxLayout.PAGE_AXIS));
+			  
+			 
+		     Arrow_Test test = new Arrow_Test();	     
+		    
+		     arrow.setPreferredSize(new Dimension(200, 200));
+		     arrow.setMinimumSize(arrow.getPreferredSize());
+		     arrow.add(test,Box.createRigidArea(new Dimension(0,5)));
+		     arrow.add(test.getSlider(), "Last");		     
+		     
+		     main.setLayout(new BorderLayout());
+		     main.add(wind, BorderLayout.WEST);
+		     main.add(arrow, BorderLayout.CENTER);
+ 		     
+         
+         frame.add(main, BorderLayout.SOUTH);
+         frame.add(openglSurface, BorderLayout.CENTER);
+         frame.setSize(1000, 1000);
+         Display.setParent(openglSurface);
+	                
         try {
-        Display.setDisplayMode(new DisplayMode(800,700));
+        Display.setDisplayMode(new DisplayMode(400,400));
         Display.create();
     } catch (LWJGLException e) {
         e.printStackTrace();
@@ -77,6 +171,15 @@ public class DisplayCA {
     	automaton.getAutomaton()[13][14].setState(0.2f);
     }
   
+    public void actionPerformed(ActionEvent evt) {
+        // Get the String entered into the TextField tfInput, convert to int
+        numberIn = Integer.parseInt(tfInput.getText());
+        sum += numberIn;      // Accumulate numbers entered into sum
+        tfInput.setText("");  // Clear input TextField
+        tfOutput.setText(sum + ""); // Display sum on the output TextField
+                                    // convert int to String
+     }
+    
     public void draw() {
     	int gridSize = 6;
     	int padding_half = 1;
@@ -141,7 +244,7 @@ public class DisplayCA {
 	    
     }
     
-    public static void main(String[] argv) {
+    public static void main(String[] argv) throws LWJGLException {
         DisplayCA gridExample = new DisplayCA();
         gridExample.start();
     }

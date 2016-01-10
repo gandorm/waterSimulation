@@ -2,21 +2,29 @@ package cellularAutomata;
 
 public class Algorithms {
 		
-	public double countState(Cell neighbourhood[]) {
+	public double countState(Cell neighbourhood[],double oldVal) {
 		double state=0.0d;	
 		double currentState = neighbourhood[0].getState();
 		
 		//if (currentState != 0.0f){
 
-		for(int i = 0; i<13;i++){
-			state += neighbourhood[i].getState();
-		}
+		//for(int i = 1; i<13;i++){
+		//	state += neighbourhood[i].getState();
+		//}
+	
+		state = neighbourhood[2].getState() + neighbourhood[3].getState() + 
+				neighbourhood[6].getState() + neighbourhood[7].getState();
 		
-		state /= Constants.DAMPING;
-		state -= currentState;
+		state /= 2;
+		state -= oldVal;
+		state = state - (state / Constants.DAMPING);
+
+		//state /= Constants.DAMPING;
+		
+				
 		//TODO dodac do constants
-	 	state /= 1.00000000001;
-		state = minmax(-0.99999f,state,0.99999f);
+	 	//state /= 1.05;
+		//state = minmax(-1.0f,state,1.0f);
 		//} 
 		//else
 		//	state =  minmax(-0.99999f,currentState,0.99999f);

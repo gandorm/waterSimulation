@@ -25,6 +25,7 @@ import org.lwjgl.opengl.GL11;
 public class DisplayCA {
 	  
 	Automaton automaton;
+	Automaton bufor;
 	Algorithms algorithms;
 	int checker = 0;
 	
@@ -119,6 +120,7 @@ public class DisplayCA {
   
     // init OpenGL
     automaton = new Automaton();
+    bufor = new Automaton();
     algorithms = new Algorithms();
     GL11.glMatrixMode(GL11.GL_PROJECTION);
     GL11.glLoadIdentity();
@@ -136,23 +138,23 @@ public class DisplayCA {
         drawAutomaton();
         cellUpdate();
         
-        //if(checker==5) {
-        ////generateTides();
+        if(checker==5) {
+        //generateTides();
        
-        //	automaton.getAutomaton()[34][12].setState(0.7f);
-        //	automaton.getAutomaton()[34][13].setState(0.7f);
-        //	automaton.getAutomaton()[34][11].setState(0.7f);
-        //	
-    	//	automaton.getAutomaton()[25][27].setState(0.7f);
-    	//	automaton.getAutomaton()[26][26].setState(0.7f);
-    	//	automaton.getAutomaton()[27][25].setState(0.7f);
-    	//	automaton.getAutomaton()[28][24].setState(0.7f);
-    	//	automaton.getAutomaton()[29][23].setState(0.7f);
-        //		
-        //checker=0;
-        //}
-        //checker++;        
-        automaton.getAutomaton()[34][12].setState(0.7f);
+        	automaton.getAutomaton()[34][12].setState(0.7f);
+        	automaton.getAutomaton()[34][13].setState(0.7f);
+        	automaton.getAutomaton()[34][11].setState(0.7f);
+        	
+    		//automaton.getAutomaton()[25][27].setState(-0.7f);
+    		//automaton.getAutomaton()[26][26].setState(-0.7f);
+    		//automaton.getAutomaton()[27][25].setState(-0.7f);
+    		//automaton.getAutomaton()[28][24].setState(-0.7f);
+    		//automaton.getAutomaton()[29][23].setState(0.7f);
+        		
+        checker=0;
+        }
+        checker++;        
+        //automaton.getAutomaton()[34][12].setState(0.7f);
         
         
         Display.update();
@@ -162,13 +164,6 @@ public class DisplayCA {
     }
   
     Display.destroy();
-    }
-  
-    public void generateTides() {    	
-    	automaton.getAutomaton()[12][13].setState(0.2f);
-    	automaton.getAutomaton()[13][12].setState(0.2f);
-    	automaton.getAutomaton()[14][13].setState(0.2f);
-    	automaton.getAutomaton()[13][14].setState(0.2f);
     }
   
     public void actionPerformed(ActionEvent evt) {
@@ -231,16 +226,29 @@ public class DisplayCA {
     
     public void cellUpdate(){
 
-    	Cell[][] b = Algorithms.deepAutomatonClone(automaton.getAutomaton());
+    	//Cell[][] b = Algorithms.deepAutomatonClone(automaton.getAutomaton());
 
-	    for(int x = Constants.X_DIMENSION -1; x >= 0; x--)
+	    for(int x = 0; x < Constants.X_DIMENSION ; x++)
 		{
-	    	for(int y=Constants.Y_DIMENSION-1;y>=0;y--){
-	    		double state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
+	    	for(int y=0;y<Constants.Y_DIMENSION; y++){
+	    		double state = algorithms.countState(algorithms.setNeighbourhood(bufor.getAutomaton(), x, y),automaton.getAutomaton()[x][y].getState());
+	    		automaton.getAutomaton()[x][y].setState(state);
+	    		automaton.getAutomaton()[x][y].setWall(automaton.getAutomaton()[x][y].isWall());
+	    		//automaton.getAutomaton()[x][y].setState(state);
+			}
+		}
+	    
+	    //zamiana 
+	    for(int x = 0; x < Constants.X_DIMENSION ; x++)
+		{
+	    	for(int y=0;y<Constants.Y_DIMENSION; y++){
+	    		double state = bufor.getAutomaton()[x][y].getState();
+	    		bufor.getAutomaton()[x][y].setState(automaton.getAutomaton()[x][y].getState());
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}
 		}
 	    
+	    //automaton.setAutomaton(b);
 	    
     }
     

@@ -1,14 +1,12 @@
 package cellularAutomata;
 
-import com.sun.corba.se.impl.orbutil.closure.Constant;
-
 public class Algorithms {
 		
-	public float countState(Cell neighbourhood[]) {
-		float state=0.0f;	
-		float currentState = neighbourhood[0].getState();
+	public double countState(Cell neighbourhood[]) {
+		double state=0.0d;	
+		double currentState = neighbourhood[0].getState();
 		
-		if (currentState != 0.0f){
+		//if (currentState != 0.0f){
 
 		for(int i = 0; i<13;i++){
 			state += neighbourhood[i].getState();
@@ -19,17 +17,36 @@ public class Algorithms {
 		//TODO dodac do constants
 	 	state /= 1.00000000001;
 		state = minmax(-0.99999f,state,0.99999f);
-		} 
-		else
-			state =  minmax(-0.99999f,currentState,0.99999f);
-		
-		if(state==1.0f) {
-			System.out.println(":(");
-		}
+		//} 
+		//else
+		//	state =  minmax(-0.99999f,currentState,0.99999f);
 		
 		return state;
 	}
 
+	
+	public Cell[] setNeighbourhood(Cell[][] current,int x,int y) {
+		Cell [] neighbourhood = new Cell[13];
+		
+		neighbourhood[0]  = current[x][y];
+		neighbourhood[1]  = (x-2>0)          ? current[x-2][y]    :new Cell(0);
+		neighbourhood[2]  = (x-1>0)          ? current[x-1][y]    :new Cell(0);
+		neighbourhood[3]  = (x+1<99)         ? current[x+1][y]    :new Cell(0);
+		neighbourhood[4]  = (x+2<99)         ? current[x+2][y]    :new Cell(0);
+		neighbourhood[5]  = (y-2>0)          ? current[x][y-2]    :new Cell(0);
+		neighbourhood[6]  = (y-1>0)          ? current[x][y-1]    :new Cell(0);
+		neighbourhood[7]  = (y+1<99)         ? current[x][y+1]    :new Cell(0);
+		neighbourhood[8]  = (y+2<99)         ? current[x][y+2]    :new Cell(0);
+		neighbourhood[9]  = (x-1>0 &&y-1>0)  ? current[x-1][y-1]  :new Cell(0);
+		neighbourhood[10] = (x-1>0 &&y+1<99) ? current[x-1][y+1]  :new Cell(0);
+		neighbourhood[11] = (x+1<99&&y-1>0)  ? current[x+1][y-1]  :new Cell(0);
+		neighbourhood[12] = (x+1<99&&y+1<99) ? current[x+1][x+1]  :new Cell(0);
+
+		
+		return neighbourhood;
+	}
+	
+	/*
 	public Cell[] setNeighbourhood(Cell[][] currentAutomaton, int positionX, int positionY) {
 		Cell[] neighbourhood = new Cell[13];
 		
@@ -448,7 +465,9 @@ public class Algorithms {
 		
 		return neighbourhood;
 	}
-	private float minmax(float leftBound, float value, float rightBound) {
+	*/
+	
+	private double minmax(double leftBound, double value, double rightBound) {
 		if (value <= leftBound) {
 			return leftBound;
 		}

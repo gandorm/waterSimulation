@@ -42,18 +42,24 @@ public class DisplayCA {
         drawAutomaton();
         cellUpdate();
         
-        if(checker==5) {
-        //generateTides();
+        //if(checker==5) {
+        ////generateTides();
+       
+        //	automaton.getAutomaton()[34][12].setState(0.7f);
+        //	automaton.getAutomaton()[34][13].setState(0.7f);
+        //	automaton.getAutomaton()[34][11].setState(0.7f);
+        //	
+    	//	automaton.getAutomaton()[25][27].setState(0.7f);
+    	//	automaton.getAutomaton()[26][26].setState(0.7f);
+    	//	automaton.getAutomaton()[27][25].setState(0.7f);
+    	//	automaton.getAutomaton()[28][24].setState(0.7f);
+    	//	automaton.getAutomaton()[29][23].setState(0.7f);
+        //		
+        //checker=0;
+        //}
+        //checker++;        
+        automaton.getAutomaton()[34][12].setState(0.7f);
         
-    		automaton.getAutomaton()[25][27].setState(0.7f);
-    		automaton.getAutomaton()[26][26].setState(0.7f);
-    		automaton.getAutomaton()[27][25].setState(0.7f);
-    		automaton.getAutomaton()[28][24].setState(0.7f);
-    		automaton.getAutomaton()[29][23].setState(0.7f);
-        		
-        checker=0;
-        }
-        checker++;        
         
         Display.update();
         try{
@@ -99,8 +105,8 @@ public class DisplayCA {
 		{
 	    	for(int y=0;y<100;y++){	 	    	
 	    	//Normalizacja
-	    	if(automaton.getAutomaton()[x][y].getState() != 0.0f){
-	    		float stan = automaton.getAutomaton()[x][y].getState();
+	    	if(!automaton.getAutomaton()[x][y].isWall()){
+	    		double stan = automaton.getAutomaton()[x][y].getState();
 	    		float state = (float) Math.sqrt(Math.abs(stan)) * (stan>0 ? +1 : -1);
 	    		GL11.glColor3f(0,0,(state + 1)/2);
 	    	}
@@ -127,7 +133,7 @@ public class DisplayCA {
 	    for(int x = Constants.X_DIMENSION -1; x >= 0; x--)
 		{
 	    	for(int y=Constants.Y_DIMENSION-1;y>=0;y--){
-	    		float state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
+	    		double state = algorithms.countState(algorithms.setNeighbourhood(automaton.getAutomaton(), x, y));
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}
 		}

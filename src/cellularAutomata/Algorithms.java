@@ -11,11 +11,8 @@ public class Algorithms {
 		
 		state /= 6.0d;
 		state -= oldVal;	
-		state /= 1.05d;
 		state = minmax(-1.0f,state,1.0f);
 		state = state - (state / Constants.DAMPING);
-
-		//state /= Constants.DAMPING;
 
 		return state;
 	}

@@ -139,11 +139,14 @@ public class DisplayCA {
         cellUpdate();
         
         if(checker==5) {
-        //generateTides();
-       
-        	automaton.getAutomaton()[34][12].setState(0.7f);
-        	automaton.getAutomaton()[34][13].setState(0.7f);
-        	automaton.getAutomaton()[34][11].setState(0.7f);
+        
+        	for(int i = 0 ; i<100;i++) {
+        		automaton.getAutomaton()[1][i].setState(6.3f);
+        	}
+        	
+        	//automaton.getAutomaton()[34][12].setState(5.7f);
+        	//automaton.getAutomaton()[34][13].setState(5.7f);
+        	//automaton.getAutomaton()[34][11].setState(5.7f);
         	
     		//automaton.getAutomaton()[25][27].setState(-0.7f);
     		//automaton.getAutomaton()[26][26].setState(-0.7f);
@@ -154,8 +157,6 @@ public class DisplayCA {
         checker=0;
         }
         checker++;        
-        //automaton.getAutomaton()[34][12].setState(0.7f);
-        
         
         Display.update();
         try{
@@ -199,9 +200,9 @@ public class DisplayCA {
     	int startY = 10;
     	
 	    GL11.glBegin(GL11.GL_QUADS);
-	    for(int x = 0; x < 100; x ++)
+	    for(int x = 2; x <98; x ++)
 		{
-	    	for(int y=0;y<100;y++){	 	    	
+	    	for(int y=2;y<98;y++){	 	    	
 	    	//Normalizacja
 	    	if(!automaton.getAutomaton()[x][y].isWall()){
 	    		double stan = automaton.getAutomaton()[x][y].getState();
@@ -225,17 +226,15 @@ public class DisplayCA {
     }
     
     public void cellUpdate(){
-
-    	//Cell[][] b = Algorithms.deepAutomatonClone(automaton.getAutomaton());
-
 	    for(int x = 0; x < Constants.X_DIMENSION ; x++)
 		{
 	    	for(int y=0;y<Constants.Y_DIMENSION; y++){
-	    		double state = algorithms.countState(algorithms.setNeighbourhood(bufor.getAutomaton(), x, y),automaton.getAutomaton()[x][y].getState());
-	    		automaton.getAutomaton()[x][y].setState(state);
-	    		automaton.getAutomaton()[x][y].setWall(automaton.getAutomaton()[x][y].isWall());
-	    		//automaton.getAutomaton()[x][y].setState(state);
-			}
+	    		if(!bufor.getAutomaton()[x][y].isWall()){
+	    			double state = algorithms.countState(algorithms.setNeighbourhood(bufor.getAutomaton(), x, y),automaton.getAutomaton()[x][y].getState());
+	    			automaton.getAutomaton()[x][y].setState(state);
+	    			automaton.getAutomaton()[x][y].setWall(automaton.getAutomaton()[x][y].isWall());
+	    		}
+	    	}
 		}
 	    
 	    //zamiana 
@@ -247,9 +246,6 @@ public class DisplayCA {
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}
 		}
-	    
-	    //automaton.setAutomaton(b);
-	    
     }
     
     public static void main(String[] argv) throws LWJGLException {

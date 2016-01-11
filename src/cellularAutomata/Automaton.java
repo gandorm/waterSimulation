@@ -8,46 +8,9 @@ public class Automaton{
 		init();
 	}
 	
-	public Automaton(Automaton a) {
-	//	Cell[][] b = a.getAutomaton();
-		//for (int i=0;i<Constants.X_DIMENSION;i++) {
-			//for(int j=0;j<Constants.Y_DIMENSION;j++) {
-				//b[i][j]=a.getAutomaton()[i][j];
-			//}
-		//}
-		this.automaton=a.getAutomaton();
-		
-	}
 		
 	public void init() {
 		automaton = new Cell[Constants.X_DIMENSION][Constants.Y_DIMENSION];
-	/*	for (int x = 0; x < 2; x++) {
-			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
-				automaton[x][y] = new Cell();
-				automaton[x][y].setState(0.0f);
-			}
-		}
-		
-		for (int x = 0; x < Constants.X_DIMENSION; x++) {
-			for (int y = 0; y < 2; y++) {
-				automaton[x][y] = new Cell();
-				automaton[x][y].setState(0.0f);
-			}
-		}
-		
-		for (int x = Constants.X_DIMENSION - 2; x < Constants.X_DIMENSION; x++) {
-			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
-				automaton[x][y] = new Cell();
-				automaton[x][y].setState(0.0f);
-			}
-		}
-		
-		for (int x = 0; x < Constants.X_DIMENSION; x++) {
-			for (int y = Constants.Y_DIMENSION - 2; y <Constants.Y_DIMENSION; y++) {
-				automaton[x][y] = new Cell();
-				automaton[x][y].setState(0.0f);
-			}
-		}*/
 		
 		for (int x = 0; x < Constants.X_DIMENSION; x++) {
 			for (int y = 0; y < Constants.Y_DIMENSION; y++) {
@@ -57,7 +20,7 @@ public class Automaton{
 		}
 		
 		
-			
+		// Exemplary land	
 		for (int i = 0; i<100; i++) {
 			int border=1;
 			

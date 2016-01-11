@@ -128,8 +128,6 @@ public class DisplayCA {
 	    		automaton.getAutomaton()[x][y].setState(state);
 			}
 		}
-	    
-	    
     }
     
     public static void main(String[] argv) {

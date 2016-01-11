@@ -13,6 +13,23 @@ import static org.lwjgl.opengl.GL11.glMatrixMode;
 import static org.lwjgl.opengl.GL11.glOrtho;
 import static org.lwjgl.opengl.GL11.glVertex2d;
 
+/*Swing*/
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JSlider;
+import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import java.awt.BorderLayout;
+import java.awt.Canvas;
+import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -29,11 +46,94 @@ public class Display2D {
 	private int fps;
 	private double time = 0;
 
+	private JLabel lblInput;     // Declare input Label
+   private JTextField tfInput;  // Declare input TextField
+   private JTextField tfOutput; // Declare output TextField
+   private int numberIn;       // Input number
+   private int sum = 0;  
+   static final int WIND_MIN = 0;
+   static final int WIND_MAX = 50;
+   static final int WIND_INIT = 25;// Accumulated sum, init to 0
+   Canvas openglSurface = new Canvas();
+   Arrow_Test test = new Arrow_Test();	
+   
+   static int WIND_SPEED = 0;
+   static int WIND_DIRECTION = 0;
+   
 	private Grid grid;
 	
 	private List<Wave> waves;
 
-	public void start() {
+	public void guiInit(){
+		class stateChanged implements ChangeListener{
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider source = (JSlider)e.getSource();
+				WIND_SPEED = (int)source.getValue();
+				System.out.print(WIND_SPEED);
+			} 
+		}
+    	
+         JFrame frame = new JFrame();
+         frame.setLayout(new BorderLayout());
+         
+         frame.setVisible(true);
+         frame.add(new JTextField("Hello World!"));
+         openglSurface.setSize(800, 800);
+         
+         JPanel panel = new JPanel();
+         panel.setSize(200,200);
+         JButton b1 = new JButton("one");
+         
+         b1.setPreferredSize(new Dimension(100, 100));
+         b1.setVisible(true);
+         panel.add(b1);
+         
+         //Sila wiatru
+         JPanel main = new JPanel();
+         
+	        JPanel wind = new JPanel();
+	        
+	 		lblInput = new JLabel("Wybierz sile wiatru: ");
+	 		wind.setLayout(new BoxLayout(wind, BoxLayout.PAGE_AXIS));		
+      
+ 		    JSlider windSpeed = new JSlider(JSlider.HORIZONTAL,
+ 		             WIND_MIN, WIND_MAX, WIND_INIT);
+ 		    
+ 			 windSpeed.setMajorTickSpacing(10);
+ 		     windSpeed.setMinorTickSpacing(1);
+ 		     windSpeed.setPaintTicks(true);
+ 		     windSpeed.setPaintLabels(true);		     
+ 		     windSpeed.addChangeListener(new stateChanged());		     
+ 		  	     
+ 		     wind.add(lblInput);
+ 		     wind.add(windSpeed);
+	 		 wind.setPreferredSize(new Dimension(400, 200));
+		     wind.setVisible(true);
+		     
+		   //Strzalka
+		     			 
+			 JPanel arrow = new JPanel();
+			 arrow.setLayout(new BoxLayout(arrow, BoxLayout.PAGE_AXIS));
+			     
+		     arrow.setPreferredSize(new Dimension(200, 200));
+		     arrow.setMinimumSize(arrow.getPreferredSize());
+		     arrow.add(test,Box.createRigidArea(new Dimension(0,5)));
+		     arrow.add(test.getSlider(), "Last");		     
+		     
+		     main.setLayout(new BorderLayout());
+		     main.add(wind, BorderLayout.WEST);
+		     main.add(arrow, BorderLayout.CENTER);
+ 		     
+         
+         frame.add(main, BorderLayout.SOUTH);
+         frame.add(openglSurface, BorderLayout.CENTER);
+         frame.setSize(1000, 1000);
+         
+	}
+	public void start() throws LWJGLException {
+		guiInit();
+		Display.setParent(openglSurface);
 		try {
 			Display.setDisplayMode(new DisplayMode(Parameters.GRID_SIZE_X * Parameters.GRID_DISPLAY_MULTIPLIER, Parameters.GRID_SIZE_Y * Parameters.GRID_DISPLAY_MULTIPLIER));
 			//Display.setDisplayMode(new DisplayMode(800, 600));
@@ -192,7 +292,7 @@ public class Display2D {
 	}
 
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws LWJGLException {
 		Display2D display2d = new Display2D();
 		display2d.start();
 	}

@@ -28,15 +28,16 @@ public class DisplayCA {
 	Automaton bufor;
 	Algorithms algorithms;
 	int checker = 0;
+	int speed = 0;
 	
    private JLabel lblInput;     // Declare input Label
    private JTextField tfInput;  // Declare input TextField
    private JTextField tfOutput; // Declare output TextField
    private int numberIn;       // Input number
    private int sum = 0;  
-   static final int WIND_MIN = 0;
-   static final int WIND_MAX = 50;
-   static final int WIND_INIT = 25;// Accumulated sum, init to 0
+   static final int WIND_MIN = 25;
+   static final int WIND_MAX = 300;
+   static final int WIND_INIT = 100;// Accumulated sum, init to 0
 	
 	
     public void start() throws LWJGLException {
@@ -45,7 +46,7 @@ public class DisplayCA {
 			@Override
 			public void stateChanged(ChangeEvent e) {
 				JSlider source = (JSlider)e.getSource();
-				System.out.print((int)source.getValue());
+				speed = source.getValue();
 			} 
 		}
     	
@@ -70,7 +71,7 @@ public class DisplayCA {
          
 	        JPanel wind = new JPanel();
 	        
-	 		lblInput = new JLabel("Wybierz sile wiatru: ");
+	 		lblInput = new JLabel("Wybierz predkosc symulacji: ");
 	 		wind.setLayout(new BoxLayout(wind, BoxLayout.PAGE_AXIS));		
       
  		    JSlider windSpeed = new JSlider(JSlider.HORIZONTAL,
@@ -84,25 +85,20 @@ public class DisplayCA {
  		  	     
  		     wind.add(lblInput);
  		     wind.add(windSpeed);
-	 		 wind.setPreferredSize(new Dimension(400, 200));
+	 		 wind.setPreferredSize(new Dimension(800, 200));
 		     wind.setVisible(true);
 		     
-		   //Strzalka
+		   JButton rain = new JButton("Deszcz");
+		   rain.setActionCommand(null);
+		   JButton waveGen = new JButton("Generuj Fale");
+		   waveGen.setActionCommand(null);
 			 
-			 JPanel arrow = new JPanel();
-			 arrow.setLayout(new BoxLayout(arrow, BoxLayout.PAGE_AXIS));
-			  
-			 
-		     Arrow_Test test = new Arrow_Test();	     
-		    
-		     arrow.setPreferredSize(new Dimension(200, 200));
-		     arrow.setMinimumSize(arrow.getPreferredSize());
-		     arrow.add(test,Box.createRigidArea(new Dimension(0,5)));
-		     arrow.add(test.getSlider(), "Last");		     
-		     
 		     main.setLayout(new BorderLayout());
-		     main.add(wind, BorderLayout.WEST);
-		     main.add(arrow, BorderLayout.CENTER);
+		     main.add(wind, BorderLayout.NORTH);
+		     main.add(rain, BorderLayout.WEST);
+			  main.add(waveGen, BorderLayout.EAST);
+			  
+		     
  		     
          
          frame.add(main, BorderLayout.SOUTH);
@@ -160,7 +156,7 @@ public class DisplayCA {
         
         Display.update();
         try{
-        TimeUnit.MILLISECONDS.sleep(100);
+        TimeUnit.MILLISECONDS.sleep(speed);
         } catch (Exception e){};
     }
   

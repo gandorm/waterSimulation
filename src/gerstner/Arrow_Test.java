@@ -1,4 +1,4 @@
-package cellularAutomata;
+package gerstner;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,6 +15,11 @@ public class Arrow_Test extends JPanel implements ChangeListener {
     double theta = 0;
     Path2D arrow = new Arrow();
 
+    
+    public int getWindDirection(){
+    	return (int)theta;
+    	}
+    
     public void stateChanged(ChangeEvent e) {
         int value = ((JSlider) e.getSource()).getValue();
         theta = Math.toRadians(value);

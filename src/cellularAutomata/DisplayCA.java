@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.BoxLayout;
@@ -36,7 +37,8 @@ public class DisplayCA {
    private JTextField tfInput;  		   // Declare input TextField
    private JTextField tfOutput; 		   // Declare output TextField
    private int numberIn;       			   // Input number
-   private int sum = 0;   
+   private int sum = 0;  
+   boolean waveGenerate = false;
    static final int WIND_MIN = 25;
    static final int WIND_MAX = 300;
    static final int WIND_INIT = 100;	   // Accumulated sum, init to 0
@@ -115,15 +117,33 @@ public class DisplayCA {
  			 
  		   //Check box
  		   
- 		  JCheckBox chinButton = new JCheckBox("Chin"); 
+ 		  JCheckBox chinButton = new JCheckBox("Generuj fale"); 
  		    chinButton.setSelected(true);
- 		    chinButton.addItemListener(null);
+ 		    chinButton.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+				
+ 		    	if (waveGenerate == false)
+ 		    		waveGenerate = true;
+ 		    	else
+ 		    		waveGenerate = false;
+				}});
  		    
  		    //Buttons
 		   JButton rain = new JButton("Reset");
-		   rain.setActionCommand(null);
+		  
+		   rain.addActionListener(new ActionListener(){ 
+			    public void actionPerformed(ActionEvent e) { 
+			        resetCa();
+			    }});
+		   
 		   JButton waveGen = new JButton("Generuj Fale");
-		   waveGen.setActionCommand(null);
+		   waveGen.addActionListener(new ActionListener(){ 
+			    public void actionPerformed(ActionEvent e) { 
+			        generateWave();
+			    }});
 			
 		   //pomocniczy jpanel 
 		   JPanel d = new JPanel();
@@ -131,7 +151,7 @@ public class DisplayCA {
 		   d.add(rain, BorderLayout.WEST);
 		   d.add(waveGen, BorderLayout.CENTER);
 		   d.add(chinButton, BorderLayout.EAST);
-		   d.setPreferredSize(new Dimension(400, 200));
+		   d.setPreferredSize(new Dimension(400, 50));
 		   d.setVisible(true);
 		   
 		     main.setLayout(new BorderLayout());
@@ -168,8 +188,8 @@ public class DisplayCA {
         cellUpdate();
         
         if(checker==frequencyInt) {
-        		generateWave();
-        		checker=0;
+        	generateWave();
+        	checker=0;
         }
         checker++;        
         
@@ -230,6 +250,7 @@ public class DisplayCA {
 	    for(int x = 2; x <98; x ++)
 		{
 	    	for(int y=2;y<98;y++){	 	    	
+	    	
 	    		if(!automaton.getAutomaton()[x][y].isWall()){
 	    		double stan = automaton.getAutomaton()[x][y].getState();
 	    		float state = (float) Math.sqrt(Math.abs(stan)) * (stan>0 ? +1 : -1);
@@ -237,6 +258,7 @@ public class DisplayCA {
 	    	}
 	    	else
 		    GL11.glColor3f(0.8f,0.8f,0);
+  	
 	    	
 	    	GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY - 1) + padding_half ); //bottom-left vertex	    	
 	        GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY)     - padding_half ); //top-left vertex
@@ -247,6 +269,7 @@ public class DisplayCA {
 	    	
 		}
         GL11.glEnd();
+	    
     }
     
     public void cellUpdate(){
@@ -261,6 +284,7 @@ public class DisplayCA {
 	    	}
 		}
 	    
+	    //zamiana 
 	    for(int x = 0; x < Constants.X_DIMENSION ; x++)
 		{
 	    	for(int y=0;y<Constants.Y_DIMENSION; y++){

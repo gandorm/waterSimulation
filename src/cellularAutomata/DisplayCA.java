@@ -54,12 +54,11 @@ public class DisplayCA {
 			} 
 		}
     	
-    	class stateChangedFreq implements ChangeListener{
-			@Override
+    	class stateChanged2 implements ChangeListener{
 			public void stateChanged(ChangeEvent e) {
 				JSlider sourceFreq = (JSlider)e.getSource();
-				frequencyInt = sourceFreq.getValue();
-			} 
+				frequencyInt = (int)sourceFreq.getValue();
+			}
 		}
     	
     	 Canvas openglSurface = new Canvas();
@@ -97,8 +96,9 @@ public class DisplayCA {
  		  	/*cz. generowania*/
  		     
 		     JPanel frequency = new JPanel();
+		     lblInput2 = new JLabel("Wybierz czestotliwosc: ");
 		     frequency.setLayout(new BoxLayout(frequency, BoxLayout.PAGE_AXIS));
- 		    JLabel lblInput2 = new JLabel("Wybierz czestotliwosc: ");
+		     
  		    	      
  		    JSlider freq = new JSlider(JSlider.HORIZONTAL,
  		             WIND_MIN, WIND_MAX, WIND_INIT);
@@ -107,7 +107,7 @@ public class DisplayCA {
  		   	freq.setMinorTickSpacing(1);
  		  	freq.setPaintTicks(true);
  		 	freq.setPaintLabels(true);		     
- 			freq.addChangeListener(new stateChangedFreq());
+ 			freq.addChangeListener(new stateChanged2());
  			
  			frequency.add(lblInput2);
  			frequency.add(freq);
@@ -117,19 +117,6 @@ public class DisplayCA {
  			 
  		   //Check box
  		   
- 		  JCheckBox chinButton = new JCheckBox("Generuj fale"); 
- 		    chinButton.setSelected(true);
- 		    chinButton.addActionListener(new ActionListener(){
-
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-				
- 		    	if (waveGenerate == false)
- 		    		waveGenerate = true;
- 		    	else
- 		    		waveGenerate = false;
-				}});
  		    
  		    //Buttons
 		   JButton rain = new JButton("Reset");
@@ -150,7 +137,6 @@ public class DisplayCA {
 		   d.setLayout(new BorderLayout());
 		   d.add(rain, BorderLayout.WEST);
 		   d.add(waveGen, BorderLayout.CENTER);
-		   d.add(chinButton, BorderLayout.EAST);
 		   d.setPreferredSize(new Dimension(400, 50));
 		   d.setVisible(true);
 		   

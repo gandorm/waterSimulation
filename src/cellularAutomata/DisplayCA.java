@@ -10,7 +10,6 @@ import java.util.concurrent.TimeUnit;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,7 +30,7 @@ public class DisplayCA {
 	Automaton bufor;
 	Algorithms algorithms;
 	int checker = 0;
-	int speed = 0;
+	int speed = 150;
 	int frequencyInt = 0;
 	
    private JLabel lblInput, lblInput2;     // Declare input Label
@@ -177,18 +176,9 @@ public class DisplayCA {
         if(checker==5) {
         
         	for(int i = 0 ; i<100;i++) {
-        		automaton.getAutomaton()[1][i].setState(6.3f);
+        		automaton.getAutomaton()[1][i].setState(20.3f);
         	}
         	
-        	//automaton.getAutomaton()[34][12].setState(5.7f);
-        	//automaton.getAutomaton()[34][13].setState(5.7f);
-        	//automaton.getAutomaton()[34][11].setState(5.7f);
-        	
-    		//automaton.getAutomaton()[25][27].setState(-0.7f);
-    		//automaton.getAutomaton()[26][26].setState(-0.7f);
-    		//automaton.getAutomaton()[27][25].setState(-0.7f);
-    		//automaton.getAutomaton()[28][24].setState(-0.7f);
-    		//automaton.getAutomaton()[29][23].setState(0.7f);
         		
         checker=0;
         }

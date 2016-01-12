@@ -4,17 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -33,16 +30,16 @@ public class DisplayCA {
 	Algorithms algorithms;
 	int checker = 0;
 	int speed = 150;
-	int frequencyInt = 0;
+	int frequencyInt = 50;
+	
    private JLabel lblInput, lblInput2;     // Declare input Label
-   private JTextField tfInput;  // Declare input TextField
-   private JTextField tfOutput; // Declare output TextField
-   private int numberIn;       // Input number
-   private int sum = 0;  
-   boolean waveGenerate= false;
+   private JTextField tfInput;  		   // Declare input TextField
+   private JTextField tfOutput; 		   // Declare output TextField
+   private int numberIn;       			   // Input number
+   private int sum = 0;   
    static final int WIND_MIN = 25;
    static final int WIND_MAX = 300;
-   static final int WIND_INIT = 100;// Accumulated sum, init to 0
+   static final int WIND_INIT = 100;	   // Accumulated sum, init to 0
 	
 	
     public void start() throws LWJGLException {
@@ -61,7 +58,7 @@ public class DisplayCA {
 				JSlider sourceFreq = (JSlider)e.getSource();
 				frequencyInt = sourceFreq.getValue();
 			} 
-    	}
+		}
     	
     	 Canvas openglSurface = new Canvas();
          JFrame frame = new JFrame();
@@ -118,16 +115,9 @@ public class DisplayCA {
  			 
  		   //Check box
  		   
- 			JRadioButton chinButton = new JRadioButton("Generuj fale"); 
+ 		  JCheckBox chinButton = new JCheckBox("Chin"); 
  		    chinButton.setSelected(true);
- 		    chinButton.addActionListener(new ActionListener(){
- 		    		public void actionPerformed(ActionEvent e) {
- 		               if (waveGenerate == false) 
- 		            		   waveGenerate = true;
-            		   else
-            			   waveGenerate = false;
- 		    		}
- 		    		});
+ 		    chinButton.addItemListener(null);
  		    
  		    //Buttons
 		   JButton rain = new JButton("Reset");
@@ -141,7 +131,7 @@ public class DisplayCA {
 		   d.add(rain, BorderLayout.WEST);
 		   d.add(waveGen, BorderLayout.CENTER);
 		   d.add(chinButton, BorderLayout.EAST);
-		   d.setPreferredSize(new Dimension(400, 50));
+		   d.setPreferredSize(new Dimension(400, 200));
 		   d.setVisible(true);
 		   
 		     main.setLayout(new BorderLayout());
@@ -162,7 +152,6 @@ public class DisplayCA {
         System.exit(0);
     }
   
-    // init OpenGL
     automaton = new Automaton();
     bufor = new Automaton();
     algorithms = new Algorithms();
@@ -172,24 +161,15 @@ public class DisplayCA {
     GL11.glMatrixMode(GL11.GL_MODELVIEW);
   
     while (!Display.isCloseRequested()) {
-        // Clear the screen and depth buffer
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
-         
-        // set the color of the quad (R,G,B,A)
         GL11.glColor3f(1.0f,1.0f,1.0f);   
-        
         
         drawAutomaton();
         cellUpdate();
         
-        if(checker==5) {
-        
-        	for(int i = 0 ; i<100;i++) {
-        		automaton.getAutomaton()[1][i].setState(20.3f);
-        	}
-        	
-        		
-        checker=0;
+        if(checker==frequencyInt) {
+        		generateWave();
+        		checker=0;
         }
         checker++;        
         
@@ -201,7 +181,19 @@ public class DisplayCA {
   
     Display.destroy();
     }
-  
+    
+    public void generateWave() {
+    	for(int i = 0 ; i<100;i++) {
+    		automaton.getAutomaton()[1][i].setState(1.0f);
+    	}
+    }
+    
+    public void resetCa(){
+        automaton = new Automaton();
+        bufor = new Automaton();
+        frequencyInt = 0;
+    }
+    
     public void actionPerformed(ActionEvent evt) {
         // Get the String entered into the TextField tfInput, convert to int
         numberIn = Integer.parseInt(tfInput.getText());
@@ -238,15 +230,13 @@ public class DisplayCA {
 	    for(int x = 2; x <98; x ++)
 		{
 	    	for(int y=2;y<98;y++){	 	    	
-	    	//Normalizacja
-	    	if(!automaton.getAutomaton()[x][y].isWall()){
+	    		if(!automaton.getAutomaton()[x][y].isWall()){
 	    		double stan = automaton.getAutomaton()[x][y].getState();
 	    		float state = (float) Math.sqrt(Math.abs(stan)) * (stan>0 ? +1 : -1);
 	    		GL11.glColor3f(0,0,(state + 1)/2);
 	    	}
 	    	else
 		    GL11.glColor3f(0.8f,0.8f,0);
-  	
 	    	
 	    	GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY - 1) + padding_half ); //bottom-left vertex	    	
 	        GL11.glVertex2i(gridSize*(x + startX - 1) + padding_half , gridSize*(y + startY)     - padding_half ); //top-left vertex
@@ -257,7 +247,6 @@ public class DisplayCA {
 	    	
 		}
         GL11.glEnd();
-	    
     }
     
     public void cellUpdate(){
@@ -272,7 +261,6 @@ public class DisplayCA {
 	    	}
 		}
 	    
-	    //zamiana 
 	    for(int x = 0; x < Constants.X_DIMENSION ; x++)
 		{
 	    	for(int y=0;y<Constants.Y_DIMENSION; y++){

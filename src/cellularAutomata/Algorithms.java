@@ -11,11 +11,8 @@ public class Algorithms {
 		
 		state /= 6.0d;
 		state -= oldVal;	
-		state /= 1.05d;
 		state = minmax(-1.0f,state,1.0f);
 		state = state - (state / Constants.DAMPING);
-
-		//state /= Constants.DAMPING;
 
 		return state;
 	}
@@ -52,19 +49,4 @@ public class Algorithms {
 		
 	}
 	
-	public static Cell[][] deepAutomatonClone(Cell[][]input) {
-		if (input==null) {
-			return null;
-		}
-		
-		Cell[][] result = new Cell[Constants.X_DIMENSION][];
-		for(int i=0;i<input.length;i++){
-			result[i]=input[i].clone();
-			for(int b=0;b<input[i].length;b++) {
-				result[i][b] = new Cell(input[i][b]); 
-			}
-		}
-
-		return result;
-	}
 }

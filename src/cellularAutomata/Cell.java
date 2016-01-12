@@ -6,10 +6,7 @@ public class Cell implements Cloneable{
 	private boolean isWall;
 	
 	public Cell(){};
-	
-	public Cell(Cell that) {
-		this.state = new Float(that.state);
-	}
+
 	public Cell(float state) {
 		this.state = new Float(state);
 	}
@@ -22,11 +19,6 @@ public class Cell implements Cloneable{
 		this.state = state;
 	}
 	
-	@Override
-	protected Cell clone() throws CloneNotSupportedException{
-		return new Cell(this);
-	}
-
 	public boolean isWall() {
 		return isWall;
 	}

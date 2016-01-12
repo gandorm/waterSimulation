@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.Box;
@@ -116,7 +117,6 @@ public class DisplayCA {
         System.exit(0);
     }
   
-    // init OpenGL
     automaton = new Automaton();
     bufor = new Automaton();
     algorithms = new Algorithms();
@@ -126,24 +126,15 @@ public class DisplayCA {
     GL11.glMatrixMode(GL11.GL_MODELVIEW);
   
     while (!Display.isCloseRequested()) {
-        // Clear the screen and depth buffer
         GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);  
-         
-        // set the color of the quad (R,G,B,A)
         GL11.glColor3f(1.0f,1.0f,1.0f);   
-        
         
         drawAutomaton();
         cellUpdate();
         
-        if(checker==5) {
-        
-        	for(int i = 0 ; i<100;i++) {
-        		automaton.getAutomaton()[1][i].setState(20.3f);
-        	}
-        	
-        		
-        checker=0;
+        if(checker==100) {
+        	generateWave();
+        	checker=0;
         }
         checker++;        
         
@@ -155,7 +146,13 @@ public class DisplayCA {
   
     Display.destroy();
     }
-  
+    
+    public void generateWave() {
+    	for(int i = 0 ; i<100;i++) {
+    		automaton.getAutomaton()[1][i].setState(1.0f);
+    	}
+    }
+    
     public void actionPerformed(ActionEvent evt) {
         // Get the String entered into the TextField tfInput, convert to int
         numberIn = Integer.parseInt(tfInput.getText());
@@ -192,8 +189,8 @@ public class DisplayCA {
 	    for(int x = 2; x <98; x ++)
 		{
 	    	for(int y=2;y<98;y++){	 	    	
-	    	//Normalizacja
-	    	if(!automaton.getAutomaton()[x][y].isWall()){
+	    	
+	    		if(!automaton.getAutomaton()[x][y].isWall()){
 	    		double stan = automaton.getAutomaton()[x][y].getState();
 	    		float state = (float) Math.sqrt(Math.abs(stan)) * (stan>0 ? +1 : -1);
 	    		GL11.glColor3f(0,0,(state + 1)/2);

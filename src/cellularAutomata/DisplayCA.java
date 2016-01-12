@@ -4,13 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
-import java.util.Random;
-import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
-import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -32,16 +30,16 @@ public class DisplayCA {
 	Algorithms algorithms;
 	int checker = 0;
 	int speed = 150;
-	int frequencyInt = 0;
+	int frequencyInt = 50;
 	
    private JLabel lblInput, lblInput2;     // Declare input Label
-   private JTextField tfInput;  // Declare input TextField
-   private JTextField tfOutput; // Declare output TextField
-   private int numberIn;       // Input number
-   private int sum = 0;  
+   private JTextField tfInput;  		   // Declare input TextField
+   private JTextField tfOutput; 		   // Declare output TextField
+   private int numberIn;       			   // Input number
+   private int sum = 0;   
    static final int WIND_MIN = 25;
    static final int WIND_MAX = 300;
-   static final int WIND_INIT = 100;// Accumulated sum, init to 0
+   static final int WIND_INIT = 100;	   // Accumulated sum, init to 0
 	
 	
     public void start() throws LWJGLException {
@@ -169,7 +167,7 @@ public class DisplayCA {
         drawAutomaton();
         cellUpdate();
         
-        if(checker==100) {
+        if(checker==frequencyInt) {
         	generateWave();
         	checker=0;
         }
@@ -188,6 +186,12 @@ public class DisplayCA {
     	for(int i = 0 ; i<100;i++) {
     		automaton.getAutomaton()[1][i].setState(1.0f);
     	}
+    }
+    
+    public void resetCa(){
+        automaton = new Automaton();
+        bufor = new Automaton();
+        frequencyInt = 0;
     }
     
     public void actionPerformed(ActionEvent evt) {

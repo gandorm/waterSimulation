@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
@@ -13,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 import javax.swing.WindowConstants;
@@ -32,12 +34,12 @@ public class DisplayCA {
 	int checker = 0;
 	int speed = 150;
 	int frequencyInt = 0;
-	
    private JLabel lblInput, lblInput2;     // Declare input Label
    private JTextField tfInput;  // Declare input TextField
    private JTextField tfOutput; // Declare output TextField
    private int numberIn;       // Input number
    private int sum = 0;  
+   boolean waveGenerate= false;
    static final int WIND_MIN = 25;
    static final int WIND_MAX = 300;
    static final int WIND_INIT = 100;// Accumulated sum, init to 0
@@ -59,7 +61,7 @@ public class DisplayCA {
 				JSlider sourceFreq = (JSlider)e.getSource();
 				frequencyInt = sourceFreq.getValue();
 			} 
-		}
+    	}
     	
     	 Canvas openglSurface = new Canvas();
          JFrame frame = new JFrame();
@@ -116,9 +118,16 @@ public class DisplayCA {
  			 
  		   //Check box
  		   
- 		  JCheckBox chinButton = new JCheckBox("Chin"); 
+ 			JRadioButton chinButton = new JRadioButton("Generuj fale"); 
  		    chinButton.setSelected(true);
- 		    chinButton.addItemListener(null);
+ 		    chinButton.addActionListener(new ActionListener(){
+ 		    		public void actionPerformed(ActionEvent e) {
+ 		               if (waveGenerate == false) 
+ 		            		   waveGenerate = true;
+            		   else
+            			   waveGenerate = false;
+ 		    		}
+ 		    		});
  		    
  		    //Buttons
 		   JButton rain = new JButton("Reset");
@@ -132,7 +141,7 @@ public class DisplayCA {
 		   d.add(rain, BorderLayout.WEST);
 		   d.add(waveGen, BorderLayout.CENTER);
 		   d.add(chinButton, BorderLayout.EAST);
-		   d.setPreferredSize(new Dimension(400, 200));
+		   d.setPreferredSize(new Dimension(400, 50));
 		   d.setVisible(true);
 		   
 		     main.setLayout(new BorderLayout());

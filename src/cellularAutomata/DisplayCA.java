@@ -5,6 +5,7 @@ import java.awt.Canvas;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.util.Random;
+import java.awt.event.KeyEvent;
 import java.util.concurrent.TimeUnit;
 
 import javax.swing.Box;
@@ -31,8 +32,9 @@ public class DisplayCA {
 	Algorithms algorithms;
 	int checker = 0;
 	int speed = 150;
+	int frequencyInt = 0;
 	
-   private JLabel lblInput;     // Declare input Label
+   private JLabel lblInput, lblInput2;     // Declare input Label
    private JTextField tfInput;  // Declare input TextField
    private JTextField tfOutput; // Declare output TextField
    private int numberIn;       // Input number
@@ -52,22 +54,24 @@ public class DisplayCA {
 			} 
 		}
     	
+    	class stateChangedFreq implements ChangeListener{
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				JSlider sourceFreq = (JSlider)e.getSource();
+				frequencyInt = sourceFreq.getValue();
+			} 
+		}
+    	
     	 Canvas openglSurface = new Canvas();
          JFrame frame = new JFrame();
          frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
          frame.setLayout(new BorderLayout());
          
          frame.setVisible(true);
-         frame.add(new JTextField("Hello World!"));
          openglSurface.setSize(800, 800);
          
          JPanel panel = new JPanel();
-         panel.setSize(200,200);
-         JButton b1 = new JButton("one");
-         
-         b1.setPreferredSize(new Dimension(100, 100));
-         b1.setVisible(true);
-         panel.add(b1);
+        
          
          //Sila wiatru
          JPanel main = new JPanel();
@@ -80,30 +84,63 @@ public class DisplayCA {
  		    JSlider windSpeed = new JSlider(JSlider.HORIZONTAL,
  		             WIND_MIN, WIND_MAX, WIND_INIT);
  		    
- 			 windSpeed.setMajorTickSpacing(10);
+ 			 windSpeed.setMajorTickSpacing(30);
  		     windSpeed.setMinorTickSpacing(1);
  		     windSpeed.setPaintTicks(true);
  		     windSpeed.setPaintLabels(true);		     
- 		     windSpeed.addChangeListener(new stateChanged());		     
- 		  	     
+ 		     windSpeed.addChangeListener(new stateChanged());	
+ 		     
  		     wind.add(lblInput);
- 		     wind.add(windSpeed);
-	 		 wind.setPreferredSize(new Dimension(800, 200));
+		     wind.add(windSpeed);
+	 		 wind.setPreferredSize(new Dimension(400, 200));
 		     wind.setVisible(true);
-		     
-		   JButton rain = new JButton("Deszcz");
+ 		  	/*cz. generowania*/
+ 		     
+		     JPanel frequency = new JPanel();
+		     frequency.setLayout(new BoxLayout(frequency, BoxLayout.PAGE_AXIS));
+ 		    JLabel lblInput2 = new JLabel("Wybierz czestotliwosc: ");
+ 		    	      
+ 		    JSlider freq = new JSlider(JSlider.HORIZONTAL,
+ 		             WIND_MIN, WIND_MAX, WIND_INIT);
+ 		    
+ 		    freq.setMajorTickSpacing(30);
+ 		   	freq.setMinorTickSpacing(1);
+ 		  	freq.setPaintTicks(true);
+ 		 	freq.setPaintLabels(true);		     
+ 			freq.addChangeListener(new stateChangedFreq());
+ 			
+ 			frequency.add(lblInput2);
+ 			frequency.add(freq);
+ 			frequency.setPreferredSize(new Dimension(400, 200));
+ 			frequency.setVisible(true);
+ 		     
+ 			 
+ 		   //Check box
+ 		   
+ 		  JCheckBox chinButton = new JCheckBox("Chin"); 
+ 		    chinButton.setSelected(true);
+ 		    chinButton.addItemListener(null);
+ 		    
+ 		    //Buttons
+		   JButton rain = new JButton("Reset");
 		   rain.setActionCommand(null);
 		   JButton waveGen = new JButton("Generuj Fale");
 		   waveGen.setActionCommand(null);
-			 
+			
+		   //pomocniczy jpanel 
+		   JPanel d = new JPanel();
+		   d.setLayout(new BorderLayout());
+		   d.add(rain, BorderLayout.WEST);
+		   d.add(waveGen, BorderLayout.CENTER);
+		   d.add(chinButton, BorderLayout.EAST);
+		   d.setPreferredSize(new Dimension(400, 200));
+		   d.setVisible(true);
+		   
 		     main.setLayout(new BorderLayout());
-		     main.add(wind, BorderLayout.NORTH);
-		     main.add(rain, BorderLayout.WEST);
-			  main.add(waveGen, BorderLayout.EAST);
-			  
-		     
- 		     
-         
+		     main.add(wind, BorderLayout.WEST);
+		     main.add(freq, BorderLayout.CENTER);
+			 main.add(d, BorderLayout.NORTH);
+		         
          frame.add(main, BorderLayout.SOUTH);
          frame.add(openglSurface, BorderLayout.CENTER);
          frame.setSize(1000, 1000);

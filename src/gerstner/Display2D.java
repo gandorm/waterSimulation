@@ -16,6 +16,7 @@ import static org.lwjgl.opengl.GL11.glVertex2d;
 import java.awt.BorderLayout;
 import java.awt.Canvas;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +31,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
+import javax.swing.WindowConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -73,19 +75,11 @@ public class Display2D {
 		}
 
 		JFrame frame = new JFrame();
+		frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		frame.setLayout(new BorderLayout());
 
 		frame.setVisible(true);
-		frame.add(new JTextField("Hello World!"));
 		openglSurface.setSize(800, 800);
-
-		JPanel panel = new JPanel();
-		panel.setSize(200, 200);
-		JButton b1 = new JButton("one");
-
-		b1.setPreferredSize(new Dimension(100, 100));
-		b1.setVisible(true);
-		panel.add(b1);
 
 		// Sila wiatru
 		JPanel main = new JPanel();
@@ -93,7 +87,7 @@ public class Display2D {
 		JPanel wind = new JPanel();
 
 		lblInput = new JLabel("Wybierz sile wiatru: ");
-		wind.setLayout(new BoxLayout(wind, BoxLayout.PAGE_AXIS));
+		//wind.setLayout(new BoxLayout(wind, BoxLayout.PAGE_AXIS));
 
 		JSlider windSpeed = new JSlider(JSlider.HORIZONTAL, WIND_MIN, WIND_MAX, WIND_INIT);
 
@@ -103,6 +97,7 @@ public class Display2D {
 		windSpeed.setPaintLabels(true);
 		windSpeed.addChangeListener(new stateChanged());
 
+		main.setLayout(new FlowLayout());
 		wind.add(lblInput);
 		wind.add(windSpeed);
 		wind.setPreferredSize(new Dimension(400, 200));
@@ -118,12 +113,12 @@ public class Display2D {
 		arrow.add(test, Box.createRigidArea(new Dimension(0, 5)));
 		arrow.add(test.getSlider(), "Last");
 
-		main.setLayout(new BorderLayout());
-		main.add(wind, BorderLayout.WEST);
-		main.add(arrow, BorderLayout.CENTER);
+		//main.setLayout(new BorderLayout());
+		main.add(wind);
+		main.add(arrow);
 
 		frame.add(main, BorderLayout.SOUTH);
-		frame.add(openglSurface, BorderLayout.CENTER);
+		frame.add(openglSurface, BorderLayout.NORTH);
 		frame.setSize(1000, 1000);
 
 	}
